@@ -1,6 +1,7 @@
 // Fill out your copyright notice in the Description page of Project Settings.
 
 #include "TankPlayerController.h"
+#include "Engine/World.h"
 
 
 
@@ -8,6 +9,8 @@
 void ATankPlayerController::BeginPlay()
 {
 	Super::BeginPlay();
+
+	PrimaryActorTick.bCanEverTick = true;
 
 	auto ControlledTank = GetControlledTank();
 	if (!ControlledTank) {
@@ -19,10 +22,26 @@ void ATankPlayerController::BeginPlay()
 
 }
 
+// Called every frame
+void ATankPlayerController::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+	AimTowardsCrosshair();
+}
+
+void ATankPlayerController::AimTowardsCrosshair()
+{
+	if (!GetControlledTank()) return;
+
+
+	
+}
+
 ATank* ATankPlayerController::GetControlledTank() const
 {
 	return Cast<ATank>(GetPawn());
-	
 }
+
+
 
 
