@@ -3,10 +3,21 @@
 #include "TankAIController.h"
 #include "Engine/World.h"
 
+// Called every frame
+void ATankAIController::Tick(float DeltaTime)
+{
+	Super::Tick(DeltaTime);
+	if(GetPlayerTank()) {
+		if(GetControlledTank())
+			GetControlledTank()->AimAt(GetPlayerTank()->GetActorLocation());
+	}
+
+}
 
 void ATankAIController::BeginPlay()
 {
 	Super::BeginPlay();
+	PrimaryActorTick.bCanEverTick = true;
 
 	auto ControlledTank = GetControlledTank();
 	if (!ControlledTank) {
@@ -24,6 +35,7 @@ void ATankAIController::BeginPlay()
 	}
 
 }
+
 
 ATank* ATankAIController::GetControlledTank() const
 {
